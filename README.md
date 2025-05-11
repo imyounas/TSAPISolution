@@ -8,11 +8,11 @@ I generally prefer using Clean Architecture for my API projects. However, since 
 
 Because there are only a few controllers and endpoints, I chose not to use MediatR (also considering its change in license type, I'm avoiding it in new projects).
 
-For logging, I used **Serilog** with only Console and File sinks. In a commercial project, I would have used Serilog with Seq or Elastic sink, or prefered using **OpenTelemetry** for logging and telemetry data collection.
+For logging, I used **Serilog** with only Console and File sinks. In a commercial project, I would have used Serilog with Seq or Elastic sink, or preferred using **OpenTelemetry** for logging and telemetry data collection.
 
 For input validation, I used **FluentValidation** with simple rule definitions.
 
-To easily manage the status of Mock API calls to my API Controller,I used Result pattren via the **Ardalis.Result** library. This library provides a simple way to handle success and failure results, making it easier to manage the flow of data and errors in the application.
+To easily manage the status of Mock API calls to my API Controller,I used the Result pattern via the **Ardalis.Result** library. This library provides a simple way to handle success and failure results, making it easier to manage the flow of data and errors in the application.
 
 To make external HTTP calls to the mock API, I used a **typed HTTP client** (`MockExternalAPIService : IExternalAPIService`).
 
@@ -45,7 +45,7 @@ The `TSProductController` contains the following endpoints:
 
 -   `[GET] /api/TSProduct` – Retrieves all products.
     
--   `[GET] /api/TSProduct/filter` – Retrieves filtered products based on `name`, `pageNo`, and `pageSize`. If `name` is null or empty, all products are returned.
+-   `[GET] /api/TSProduct/filter` – Retrieves filtered products based on `name`, `pageNo`, and `pageSize`. If the `name` is null or empty, all products are returned.
     
 -   `[POST] /api/TSProduct` – Creates a new product.
     
@@ -60,7 +60,7 @@ The **FluentValidation** library is used for all incoming request DTO validation
 ### Error Handling
 
 The `ProductService` class wraps all external API calls in a `try/catch` block. Based on the outcome, it returns the appropriate result to the controller. To send responses to the user, I used the **Result pattern** via the `Ardalis.Result` library.
-Beasides that there is Global Exception Handler middleware that handles all unhandled exceptions and returns a generic error message to the user. This middleware is registered in the `Program.cs` file.
+Besides that there is Global Exception Handler middleware that handles all unhandled exceptions and returns a generic error message to the user. This middleware is registered in the `Program.cs` file.
 
 ### Tests
 I didn't implement any unit or/and integration tests, considering it out of scope for this task. However, I would have used **xUnit** for unit testing and **FluentAssertions** for assertions. For integration tests, I would have used **FluentAssertions** and **Microsoft.AspNetCore.Mvc.Testing**.
