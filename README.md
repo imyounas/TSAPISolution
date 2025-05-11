@@ -8,7 +8,7 @@ I generally prefer using Clean Architecture for my API projects. However, since 
 
 Because there are only a few controllers and endpoints, I chose not to use MediatR (also considering its change in license type, I'm avoiding it in new projects).
 
-For logging, I used **Serilog** with only Console and File sinks. In a commercial project, I would have used Serilog with Seq or ELastic sink, or prefered using **OpenTelemetry** for logging and telemetry data collection.
+For logging, I used **Serilog** with only Console and File sinks. In a commercial project, I would have used Serilog with Seq or Elastic sink, or prefered using **OpenTelemetry** for logging and telemetry data collection.
 
 For input validation, I used **FluentValidation** with simple rule definitions.
 
@@ -18,7 +18,7 @@ To make external HTTP calls to the mock API, I used a **typed HTTP client** (`Mo
 
 For JSON serialization and deserialization, I chose **Newtonsoft.Json**, as there were some scenarios where it provided better flexibility than the default .NET JSON library.
 
-The mock RESTful API returns JSON responses where the `data` property contains key-value pairs depending on the product type. Here keys are always string, but value types are vary depending upon attribute type. Example:
+The mock RESTful API returns JSON responses where the `data` property contains key-value pairs depending on the product type. Here keys are always string, but value types vary depending upon (key)attribute type. Example:
 ```json
 {
   "data": {
