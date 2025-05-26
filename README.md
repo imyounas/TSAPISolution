@@ -76,8 +76,12 @@ To build and run the Web API project from the command line using the .NET CLI:
 1. Open a terminal and navigate to the solution directory.
 2. Run the following command to build and start the API:
 
-`dotnet build TSWebAPI/TSWebAPI.csproj`
-`dotnet run --project TSWebAPI/TSWebAPI.csproj`
+```
+dotnet build TSWebAPI/TSWebAPI.csproj
+
+dotnet run --project TSWebAPI/TSWebAPI.csproj
+
+```
 The API will start and listen on the configured ports. You can access the Swagger UI (for API documentation and testing) at:
 http://localhost:5050/swagger/index.html
 
@@ -87,9 +91,12 @@ To build and run the integration tests from the command line using the .NET CLI:
 
 1. Open a terminal and navigate to the solution directory.
 2. Run the following commands:
-`dotnet build TSIntegration.Test/TSIntegration.Test.csproj`
-`dotnet test TSIntegration.Test/TSIntegration.Test.csproj`
+```
+dotnet build TSIntegration.Test/TSIntegration.Test.csproj
+
 dotnet test TSIntegration.Test/TSIntegration.Test.csproj
+```
+
 This will build the test project and execute all integration tests, displaying the results in the console.
 
 ---
