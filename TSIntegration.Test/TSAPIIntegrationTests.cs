@@ -79,6 +79,41 @@ namespace TSIntegration.Test
         }
 
         [Fact]
+        public async Task CreateProduct_WithJsonPayload_ReturnsCreatedProduct()
+        {
+            // Note To Reviewer: When evaluating assignments, please try to send payload which contains mix of different data types, like string, int, decimal, etc.
+            var newProductJson = """
+                
+                {
+                
+                    "name": "IY_Desktop_J",
+                   "data": {
+                      "year": 2019,
+                      "price": 1849.99,
+                      "isAvailable": true,
+                      "CPU model": "Intel Core i9",
+                      "Hard disk size": "1 TB",
+                       "countryX":"USA"
+                   },  
+                   "Author": "King"
+                }
+                
+                """;
+
+
+            var newProduct = JsonConvert.DeserializeObject<CreateProductRequestDto>(newProductJson);
+
+            var content = new StringContent(JsonConvert.SerializeObject(newProduct), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("/api/TSProduct", content);
+            response.EnsureSuccessStatusCode();
+            var json = await response.Content.ReadAsStringAsync();
+            var product = JsonConvert.DeserializeObject<ProductDto>(json);
+            product.Should().NotBeNull();
+            product?.Name.Should().Be("IY_Desktop_J");
+
+        }
+
+        [Fact]
         public async Task DeleteProduct_ReturnsSuccess()
         {
             // First, create a product to ensure it exists

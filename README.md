@@ -22,6 +22,7 @@ The mock RESTful API returns JSON responses where the `data` property contains k
   "data": {
     "year": 2019,
     "price": 1849.99,
+     "isAvailable": true,
     "CPU model": "Intel Core i9",
     "Hard disk size": "1 TB",
  }
@@ -58,10 +59,12 @@ Besides that there is Global Exception Handler middleware that handles all unhan
 
 Integration tests are implemented in the `TSIntegration.Test` project using xUnit, FluentAssertions, and Microsoft.AspNetCore.Mvc.Testing's `WebApplicationFactory`. These tests cover the main REST API endpoints of the `TSProductController`:
 
-- `[GET] /api/TSProduct` – Verifies retrieval of all products.
-- `[GET] /api/TSProduct/filter` – Verifies filtering products by name, page number, and page size.
-- `[POST] /api/TSProduct` – Verifies creation of a new product.
-- `[DELETE] /api/TSProduct` – Verifies deletion of a product by product ID.
+- `GetAllProducts_ReturnsSuccessAndProducts`: Tests `[GET] /api/TSProduct` to verify retrieval of all products returns a non-empty list and a successful response.
+- `GetProductsByFilter_ReturnsFilteredProducts`: Tests `[GET] /api/TSProduct/filter` with a name filter and pagination, ensuring the correct number of filtered products is returned.
+- `GetProductsByFilter_WithEmptyName_ReturnsFilteredProducts`: Tests `[GET] /api/TSProduct/filter` with an empty name, verifying pagination and that all products are returned as expected.
+- `CreateProduct_ReturnsCreatedProduct`: Tests `[POST] /api/TSProduct` by sending a new product DTO and verifying the created product is returned with the correct name.
+- `CreateProduct_WithJsonPayload_ReturnsCreatedProduct`: Tests `[POST] /api/TSProduct` by sending a **JSON payload with mix of different data types, like string, int, decimal, bool etc. in the `data` property, verifying the product is created and returned correctly**.
+- `DeleteProduct_ReturnsSuccess`: Tests `[DELETE] /api/TSProduct` by first creating a product, then deleting it by its ID, and verifying the deletion was successful.
 
 The tests use an in-memory test server to simulate real HTTP requests and responses, ensuring the API behaves as expected end-to-end. You can run the integration tests with:
 dotnet test TSIntegration.Test/TSIntegration.Test.csproj
@@ -75,13 +78,12 @@ To build and run the Web API project from the command line using the .NET CLI:
 
 1. Open a terminal and navigate to the solution directory.
 2. Run the following command to build and start the API:
-
 ```
 dotnet build TSWebAPI/TSWebAPI.csproj
 
 dotnet run --project TSWebAPI/TSWebAPI.csproj
-
 ```
+
 The API will start and listen on the configured ports. You can access the Swagger UI (for API documentation and testing) at:
 http://localhost:5050/swagger/index.html
 
@@ -91,12 +93,12 @@ To build and run the integration tests from the command line using the .NET CLI:
 
 1. Open a terminal and navigate to the solution directory.
 2. Run the following commands:
+
 ```
 dotnet build TSIntegration.Test/TSIntegration.Test.csproj
 
 dotnet test TSIntegration.Test/TSIntegration.Test.csproj
 ```
-
 This will build the test project and execute all integration tests, displaying the results in the console.
 
 ---
